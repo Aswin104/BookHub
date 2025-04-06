@@ -1,0 +1,58 @@
+{% extends "layout.html" %} {% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="content-section">
+      <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-grp">
+          <legend class="border-bottom mb-4 text-center">
+            🔍 Book Recommender
+          </legend>
+          <div class="form-grp mb-3">
+            {{ form.bookname.label(class="form-control-label") }} {% if
+            form.bookname.errors %} {{ form.bookname(class="form-control
+            form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.bookname.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.bookname(class="form-control form-control-lg") }}
+            {% endif %}
+          </div>
+          <div class="form-grp text-center">
+            {{ form.submit(class="btn btn-outline-info px-5 py-2") }}
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% if no_result %}
+<div class="text-center text-warning mt-4">
+  <p>
+    ⚠️ Sorry, no recommendations found for that book. Please try another title.
+  </p>
+</div>
+{% endif %} {% if final %}
+<div class="text-center mt-5 mb-4">
+  <h3 class="text-light">📚 Top Recommendations for You</h3>
+</div>
+<div class="row">
+  {% for w, x, y, z in final %}
+  <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-4">
+    <div class="media content-section w-100">
+      <img class="book-cover-image" src="{{ x }}" alt="{{ w }} book cover" />
+      <div class="media-body pl-3">
+        <div class="article-metadata">
+          <strong>{{ w }}</strong>
+        </div>
+        <div class="article-content"><i>Publication year:</i> {{ y }}</div>
+        <div class="article-content"><i>Author:</i> {{ z }}</div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %} {% endblock content %}
